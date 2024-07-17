@@ -1,6 +1,6 @@
 <template>
   <h1 class="text-3xl font-bold underline">
-    Hello world!
+    Hello world! 
   </h1>
   <hr class="m-2">
   <RouterView />
@@ -28,18 +28,20 @@ export default {
   methods: {
     async fetchCategories(){
       try {
-        const response = await fetch("http://localhost:3001/api/categories")
+        const response = await fetch("http://localhost:3400/api/categories")
         const categories = await response.json()
-        this.categoriesStore.addCategories(categories)
+        //console.log("Categories", categories.data)
+        this.categoriesStore.addCategories(categories.data)
       } catch(error) {
         console.log("Error fetchCategories", error.message)
       }
     },
     async fetchStatus(){
       try {
-        const response2 = await fetch("http://localhost:3001/api/status")
+        const response2 = await fetch("http://localhost:3400/api/status")
         const status = await response2.json()
-        this.statusStore.addStatus(status)
+        this.statusStore.addStatus(status.data)
+       // console.log("Status", status.data, this.statusStore.status)
       } catch(error) {
         console.log("Error fetchStatus", error.message)
       }

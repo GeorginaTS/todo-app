@@ -2,6 +2,8 @@ import express from 'express'
 import dbConnect from './config/mongo.js'
 import usersRouter from "./routes/users.js"
 import todosRouter from './routes/todos.js' 
+import categoriesRouter from './routes/categories.js' 
+import statusRouter from './routes/status.js'
 
 import cors from "cors"
 
@@ -17,6 +19,8 @@ app.get('/', (request, response) => {
 
 app.use("/api/users", usersRouter)
 app.use("/api/todos", todosRouter)
+app.use("/api/categories", categoriesRouter)
+app.use("/api/status", statusRouter)
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`)

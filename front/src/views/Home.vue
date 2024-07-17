@@ -4,7 +4,7 @@
     <ul class="flex flex-wrap gap-2" v-if="todos">
       <li v-for="item in todos" :key="item.id" class="border border-gray-800 rounded p-2">
         <RouterLink :to="'/' + item._id">
-        <CardTodo :todo="item" />"
+        <CardTodo :todo="item" />
         </RouterLink>
         <div class="bg-stone-600 flex justify-between p-2"> <button @click="updateTodo(item._id)">update</button> <button
             @click="deleteTodo(item._id)">delete</button> </div>

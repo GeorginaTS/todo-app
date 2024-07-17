@@ -10,6 +10,7 @@ export const useStatusStore = defineStore("status", {
   actions: {
     addStatus(value) {
         try {
+            this.status = []
             value.forEach((element) => this.status.push(element))
           }
           catch(error) {

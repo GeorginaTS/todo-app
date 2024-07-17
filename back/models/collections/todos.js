@@ -13,13 +13,13 @@ const todoSchema = new mongoose.Schema(
             type: String
         },
         user_id: {
-            type: Number
+            type: String
         },
         category_id: {
-            type: Number
+            type: String
         },
         status_id:{
-            type: Number
+            type: String
         }
     },
     {

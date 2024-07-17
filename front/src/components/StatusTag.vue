@@ -17,8 +17,10 @@ export default {
         const statusStore = useStatusStore()
         return { statusStore }
     },
-    created() {      
-        this.status = this.statusStore.status.find((item) => item.id == this.id)
+    created() {   
+        console.log("created Status component", this.statusStore.status)  
+        this.status = this.statusStore.status.find((item) => item._id == this.id)
+        console.log("id status find in component", this.status)
     }
 
 }

@@ -35,11 +35,11 @@ export default {
     async mounted() {
         try {
             const response = await fetch(`http://localhost:3400/api/todos/${this.todoId}`);
-            const todo = await response.json()
+            const data = await response.json()
             //console.log("todo", todo[0])
-
-            if (todo[0]) {
-                this.todo = todo[0]
+            const todo = data.data
+            if (todo) {
+                this.todo = todo
                 this.title = this.todo.title
                 this.content = this.todo.content
                 this.category = this.todo.idcategory
