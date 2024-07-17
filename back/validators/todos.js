@@ -1,7 +1,7 @@
 import  {check, validationResult} from "express-validator"
 
 export const validatorTodo = [
-    check("title").exists().notEmpty().isLength({min:3, max:16}),
+    check("title").exists().notEmpty().isLength({min:3, max:40}),
     check("content").exists(),
     check("user_id").exists().notEmpty().isNumeric(),
     check("category_id").exists().notEmpty().isNumeric(),
