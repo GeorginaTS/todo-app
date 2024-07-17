@@ -1,4 +1,4 @@
-import { todosModel } from "../models/index";
+import  todosModel  from "../models/collections/todos.js";
 
 export const getAllTodos = async (request, response) => {
   try {
@@ -15,7 +15,7 @@ export const createTodo = async (request, response) => {
   try {
     const todo = request.body;
     const data = await todosModel.create(todo);
-    response.status(201).json({ msg: "Todo created", data, todo });
+    response.status(200).send({ msg: "Todo created", data, todo });
   } catch (error) {
     response
       .status(500)
@@ -25,7 +25,7 @@ export const createTodo = async (request, response) => {
 export const getOneTodo = async (request, response) => {
   try {
     const { id } = request.params;
-    const data = await todosModel.getById(id);
+    const data = await todosModel.findById(id);
     data
       ? response.status(200).send({ msg: "getOneTodo OK", id, data })
       : response.status(404).send({ msg: "Error Todo Not found", id });

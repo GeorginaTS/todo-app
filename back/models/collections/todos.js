@@ -3,7 +3,6 @@ import mongoose from "mongoose"
 
 const todoSchema = new mongoose.Schema(
     {
-        //estructura del objeto, propiedades y tipos de datos
         id:{
             type: mongoose.Types.ObjectId
         },
