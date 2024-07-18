@@ -1,12 +1,11 @@
 <template>
     <div>
-        <h3 class="font-bold">{{ todo.title }} 
+        <div class="flex justify-between gap-2">
+            <h4 class="font-bold">{{ todo.title }} </h4>
             <CategoryTag :id="todo.category_id" />
-
-        </h3>
+        </div>
         <p>{{ todo.content }}</p>
         <p class="text-xs">User: {{ todo.user_id }}</p>
-        <h4><StatusTag :id="todo.status_id"/></h4>
     </div>
 </template>
 <script>

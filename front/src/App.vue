@@ -1,5 +1,6 @@
 <template>
-  <header class="bg-stone-200 flex justify-between items-center p-4 w-full h-18">
+  <header class="bg-stone-200 flex flex-col justify-between items-center p-4 w-full h-18">
+    <div class="flex justify-between w-full">
     <div class="flex gap-4">
       <div class="flex gap-1">
         <div class="w-4 div_green1 h-10 rounded-lg"></div>
@@ -12,12 +13,14 @@
     </div>
     <nav class="w-fit flex gap-2 p-2">
       <RouterLink to="/auth"><button>Home</button> </RouterLink>
-      <RouterLink to="/auth"><button>Add New Task </button></RouterLink>
       <RouterLink to="/auth"><button>Profile</button></RouterLink>
     </nav>
+  </div>
+  <hr />
   </header>
-  <hr class=" bg-slate-600 h-1 w-full">
-  <RouterView class="h-full" />
+  <main class="h-full">
+    <RouterView class="h-full" />
+  </main>
   <footer class="h-8 bg-black w-full text-white text-center">
     Todo app. made by Georgina on july 2024
   </footer>
@@ -25,11 +28,11 @@
 <script>
 import { useCategoriesStore } from "./stores/categories"
 import { useStatusStore } from "./stores/status"
+
 export default {
   name: "App",
   data() {
     return {
-
     }
   },
   setup() {
@@ -61,7 +64,8 @@ export default {
       } catch (error) {
         console.log("Error fetchStatus", error.message)
       }
-    }
+    },
+    
   }
 }
 </script>

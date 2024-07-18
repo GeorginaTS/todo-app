@@ -13,6 +13,23 @@ h1 {
   font-weight: bold;
   color: #496989;
 }
+h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  display:flex;
+  justify-content: center;
+}
+h4 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+hr { 
+  height:1px;
+  width: 100%;
+  margin: 0.5rem;
+  border: 1px solid var(--primary-color);
+}
+
 
 button {
   background-color: white;

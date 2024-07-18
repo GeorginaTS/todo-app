@@ -47,6 +47,8 @@ export default {
                     body: JSON.stringify(newTodo)
                 })
                 const data = await response.json()
+                this.$emit('todosUpdated', 1);
+
                 this.title = ""
                 this.content = ""
                 this.category = 0
