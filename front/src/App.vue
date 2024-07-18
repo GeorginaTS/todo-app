@@ -1,36 +1,22 @@
 <template>
-  <header class="bg-stone-200 flex flex-col justify-between items-center p-4 w-full h-18">
-    <div class="flex justify-between w-full">
-    <div class="flex gap-4">
-      <div class="flex gap-1">
-        <div class="w-4 div_green1 h-10 rounded-lg"></div>
-        <div class="w-4 div_green2 h-10 rounded-lg"></div>
-        <div class="w-4 div_green3 h-10 rounded-lg"></div>
-      </div>
-      <h1 class="">
-        Hello App
-      </h1>
-    </div>
-    <nav class="w-fit flex gap-2 p-2">
-      <RouterLink to="/auth"><button>Home</button> </RouterLink>
-      <RouterLink to="/auth"><button>Profile</button></RouterLink>
-    </nav>
-  </div>
-  <hr />
+  <header class="bg-stone-200 flex flex-col justify-between items-center w-full h-18">
+    <Header />
   </header>
-  <main class="h-full">
-    <RouterView class="h-full" />
+  <main class="h-full w-full">
+    <RouterView class="h-full w-full" />
   </main>
-  <footer class="h-8 bg-black w-full text-white text-center">
+  <footer class="h-8 div_primary w-full text-white flex justify-center items-center">
     Todo app. made by Georgina on july 2024
   </footer>
 </template>
 <script>
 import { useCategoriesStore } from "./stores/categories"
 import { useStatusStore } from "./stores/status"
+import Header from "./components/Header.vue";
 
 export default {
   name: "App",
+  components: {Header},
   data() {
     return {
     }
@@ -65,7 +51,7 @@ export default {
         console.log("Error fetchStatus", error.message)
       }
     },
-    
+
   }
 }
 </script>

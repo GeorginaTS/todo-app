@@ -23,19 +23,29 @@ h4 {
   font-size: 1rem;
   font-weight: bold;
 }
+input, textarea, select {
+  border: 1px solid var(--primary-color);
+  border-radius: 0.2rem;
+  padding: 5px;
+}
 hr { 
   height:1px;
   width: 100%;
-  margin: 0.5rem;
   border: 1px solid var(--primary-color);
 }
-
-
 button {
   background-color: white;
-  padding: 0.2rem 1.8rem;
   border: 1px solid var(--primary-color);
+  padding: 0.2rem 1.8rem;
   border-radius: 0.3rem;
+}
+.button_primary {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: bold;  
+}
+.div_primary{
+  background-color: var(--primary-color);
 }
 .div_green1{
   background-color: var(--green1);

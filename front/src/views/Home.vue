@@ -1,11 +1,13 @@
 <template>
   <div class="w-full">
     <div class="flex justify-center w-full">
-      <AddTodoForm v-if="addForm" @todosUpdated="todosListUpdate"/>
-      <button @click="showAddForm()" v-if="!addForm && !updateForm" class="h-fit">Add New Task </button>
-      <UpdateTodoForm v-if="updateForm" :todoId="updateForm" @todosUpdated="todosListUpdate"/> 
+      <div class="w-[80%] div_primary text-center p-2 rounded-lg" v-if="!addForm && !updateForm">
+        <button @click="showAddForm()"  class="h-fit button_primary">Add New Task </button>
+      </div>
+      <AddTodoForm v-if="addForm" @todosUpdated="todosListUpdate" />
+      <UpdateTodoForm v-if="updateForm" :todoId="updateForm" @todosUpdated="todosListUpdate" />
     </div>
-    
+
     <div>
       <ul v-if="statusStore" class="flex justify-between gap-4 m-2">
         <li v-for="item in statusStore.status" :value="item._id" class="w-full rounded-lg p-2"
@@ -18,7 +20,7 @@
                 <RouterLink :to="'/auth/' + todo._id">
                   <CardTodo :todo="todo" />
                 </RouterLink>
-                <div class="bg-stone-200 flex justify-between gap-2 p-2 rounded"> 
+                <div class="bg-stone-200 flex justify-between gap-2 p-2 rounded">
                   <button @click="updateTodo(todo._id)">✍️</button>
                   <button @click="deleteTodo(todo._id)">🗑️ </button>
                 </div>
@@ -47,7 +49,7 @@ export default {
     return {
       todos: [],
       updateForm: 0,
-      addForm:0
+      addForm: 0
     }
   },
   setup() {
@@ -100,10 +102,10 @@ export default {
     showAddForm() {
       this.updateForm = 0
       if (this.addForm) {
-        this.addForm=0
+        this.addForm = 0
       } else {
-        this.addForm=1
-      } 
+        this.addForm = 1
+      }
     }
   }
 }
