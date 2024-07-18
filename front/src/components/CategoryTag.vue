@@ -18,9 +18,7 @@ export default {
         return { categoriesStore }
     },
     mounted() { 
-        console.log("CategoryTag", this.categoriesStore.categories, "id", this.id)     
         this.category = this.categoriesStore.categories.find((item) => item._id == this.id)
-        console.log("CategoryTag2", this.category, "id", this.id)
     }
 
 }

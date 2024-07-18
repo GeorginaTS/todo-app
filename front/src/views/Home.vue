@@ -1,20 +1,35 @@
 <template>
   <div>
     <h2 class="text-xl font-bold">Todos List</h2>
+    <div>
+      <ul v-if="statusStore" class="flex justify-between gap-4 m-2">
+        <li v-for="item in statusStore.status" :value="item._id" class="w-full rounded p-2"
+          :style="{ backgroundColor: item.color }">
+          <h3>{{ item.name }}</h3>
+          <div>
+            <ul class="flex flex-col gap-2">
+              <li v-for="todo in todos.filter(element => element.status_id == item._id)" :key="todo._id"
+                class="border border-gray-800 rounded p-2">
+                <RouterLink :to="'/auth/' + todo._id">
+                  <CardTodo :todo="todo" />
+                </RouterLink>
+                <div class="bg-stone-300 flex justify-between p-2"> <button @click="updateTodo(todo._id)">✍️
+                    Edit</button>
+                  <button @click="deleteTodo(todo._id)">🗑️ Delete</button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
     <ul class="flex flex-wrap gap-2" v-if="todos">
-      <li v-for="item in todos" :key="item.id" class="border border-gray-800 rounded p-2">
-        <RouterLink :to="'/' + item._id">
-        <CardTodo :todo="item" />
-        </RouterLink>
-        <div class="bg-stone-600 flex justify-between p-2"> <button @click="updateTodo(item._id)">update</button> <button
-            @click="deleteTodo(item._id)">delete</button> </div>
 
-      </li>
-    </ul> 
+    </ul>
   </div>
   <hr class="bg-stone-900 m-4 w-full ">
   <div class="flex justify-center">
-    <AddTodoForm v-if="!updateForm"/>
+    <AddTodoForm v-if="!updateForm" />
     <UpdateTodoForm v-else :todoId="updateForm" />
   </div>
 </template>
@@ -22,7 +37,7 @@
 import AddTodoForm from "../components/AddTodoForm.vue";
 import UpdateTodoForm from "../components/Update1TodoForm.vue";
 import CardTodo from "../components/CardTodo.vue";
-
+import { useStatusStore } from "../stores/status"
 export default {
   name: "Home",
   components: { AddTodoForm, CardTodo, UpdateTodoForm },
@@ -31,6 +46,10 @@ export default {
       todos: [],
       updateForm: 0
     }
+  },
+  setup() {
+    const statusStore = useStatusStore()
+    return { statusStore }
   },
   async created() {
     try {
@@ -55,25 +74,21 @@ export default {
     },
     async deleteTodo(id) {
       try {
-        const response = await fetch(`http://localhost:3400/api/todos/${id}`, {
-          method: "DELETE"
-        });
-        this.fetchTodos()
+        const result = confirm("Are you sure to delete Todo?")
+        if (result) {
+          const response = await fetch(`http://localhost:3400/api/todos/${id}`, {
+            method: "DELETE"
+          });
+          this.fetchTodos()
+        }
       } catch {
         console.error('Failed DeleteToDo');
       }
     },
     async updateTodo(id) {
-        this.updateForm = id
+      this.updateForm = id
     }
   }
 }
-
 </script>
-<style>
-button {
-  background-color: white;
-  margin: 1px;
-  padding: 0.2rem;
-}
-</style>
+<style></style>

@@ -18,9 +18,7 @@ export default {
         return { statusStore }
     },
     created() {   
-        console.log("created Status component", this.statusStore.status)  
         this.status = this.statusStore.status.find((item) => item._id == this.id)
-        console.log("id status find in component", this.status)
     }
 
 }
