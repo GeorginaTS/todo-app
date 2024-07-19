@@ -1,7 +1,6 @@
 <template>
-  <header class="bg-stone-200 flex flex-col justify-between items-center w-full h-18">
-    <Header />
-  </header>
+  
+  <Header />
   <main class="h-full w-full">
     <RouterView />
   </main>

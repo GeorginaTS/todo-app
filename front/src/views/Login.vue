@@ -6,17 +6,18 @@
       <h3>Register o Sign-in</h3>
     </div>
     <div class="w-full flex justify-center items-center">
-      <form method="POST" class="flex flex-col gap-4 div_green1 p-12 rounded-lg w-[80%]" @submit="login">
+      <div class="flex flex-col gap-4 div_green1 p-12 rounded-lg w-[80%]">
         <input type="email" name="email" id="email" v-model="email" placeholder="Enter email address">
         <input type="password" name="password" id="password" v-model="password" placeholder="Enter password">
-        <button class="button_primary" type="submit">Sign-in</button>
-      </form>
+        <button class="button_primary" @click="login">Sign-in</button>
+      </div>
     </div>
   </div>
 </template>
 <script>
 export default {
   name: "Login",
+  inject: ["serverUrl", "hostUrl"],
   data() {
     return {
       email: "georgina@merit.com",
@@ -27,7 +28,7 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await fetch("http://localhost:3400/api/users/login", {
+        const response = await fetch(`${this.serverUrl}/users/login`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -38,7 +39,6 @@ export default {
                 this.token = data.token
                 localStorage.setItem("token", data.token)
                 console.log("Data fetch", data, "token localStorage", localStorage.getItem("token"))
-                //await response.redirected("http://localhost:5173/auth")
       }
       catch(error) {
         response.send({ msg: "Error", error: error.message })
