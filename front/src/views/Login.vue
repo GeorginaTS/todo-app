@@ -6,7 +6,7 @@
       <h3>Register o Sign-in</h3>
     </div>
     <div class="w-full flex justify-center items-center">
-      <form action="" class="flex flex-col gap-4 div_green1 p-12 rounded-lg w-[80%]" @submit="login">
+      <form method="POST" class="flex flex-col gap-4 div_green1 p-12 rounded-lg w-[80%]" @submit="login">
         <input type="email" name="email" id="email" v-model="email" placeholder="Enter email address">
         <input type="password" name="password" id="password" v-model="password" placeholder="Enter password">
         <button class="button_primary" type="submit">Sign-in</button>
@@ -20,7 +20,8 @@ export default {
   data() {
     return {
       email: "georgina@merit.com",
-      password: "123456"
+      password: "123456",
+      token:""
     }
   },
   methods: {
@@ -34,7 +35,10 @@ export default {
                     body: JSON.stringify({"email":this.email, "password": this.password})
                 })
                 const data = await response.json()
-                console.log(data)
+                this.token = data.token
+                localStorage.setItem("token", data.token)
+                console.log("Data fetch", data, "token localStorage", localStorage.getItem("token"))
+                //await response.redirected("http://localhost:5173/auth")
       }
       catch(error) {
         response.send({ msg: "Error", error: error.message })

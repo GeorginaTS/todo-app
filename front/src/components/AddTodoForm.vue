@@ -17,6 +17,7 @@
 import { useCategoriesStore } from "../stores/categories"
 export default {
     name: "AddTodoForm",
+    inject: ["serverUrl"],
     data() {
         return {
             title: "",
@@ -39,7 +40,7 @@ export default {
             }
             console.log(newTodo)
             try {
-                const response = await fetch("http://localhost:3400/api/todos", {
+                const response = await fetch(`${this.serverUrl}/todos`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

@@ -1,33 +1,24 @@
 <template>
-   <div class="w-full">
+  <div class="w-full">
     <div class="flex justify-center w-full">
-      <div class="w-[80%] div_primary text-center p-2 rounded-lg" v-if="!addForm && !updateForm">
-        <button @click="showAddForm()"  class="h-fit button_primary">Add New Task </button>
-      </div>
+        <button @click="showAddForm()" class="h-fit button_primary my-2"  v-if="!addForm && !updateForm">Add New Task </button>
       <AddTodoForm v-if="addForm" @todosUpdated="todosListUpdate" />
       <UpdateTodoForm v-if="updateForm" :todoId="updateForm" @todosUpdated="todosListUpdate" />
     </div>
 
     <div>
-      <div v-if="statusStore" class="flex justify-between gap-4 m-2">
-        <div v-for="status in statusStore.status" 
-        :key="status._id" 
-        :id="status._id"
-        :value="status._id" class="w-full rounded-lg p-2"
-          :style="{ backgroundColor: status.color }" 
-          @dragover.prevent
-          @drop.prevent="handleDrop"
-          >
-          <h3>{{ status.name }}</h3>
+      <ul v-if="statusStore" class="flex justify-between gap-4 m-2">
+        <li v-for="status in statusStore.status" :key="status._id" :id="status._id" :value="status._id"
+          class="w-full rounded-lg p-2" :style="{ backgroundColor: status.color }" @dragover.prevent="handleDragOver"
+          @drop.prevent="handleDrop">
+          <h3 @dragover.prevent="handleDragOver" @drop.prevent="handleDrop" :id="status._id">
+            {{ status.name }}
+          </h3>
           <div>
             <ul class="flex flex-col gap-2 p-4">
-              <li v-for="todo in todos.filter(element => element.status_id == status._id)" 
-                :key="todo._id" 
-                :id="todo._id"
-                class="border border-gray-800 rounded p-2 flex flex-col gap-2 bg-white bg-opacity-50" draggable="true"
-                @dragstart="handleDragStart(todo._id)"
-                @dragend="handleDragEnd"
-                >
+              <li v-for="todo in todos.filter(element => element.status_id == status._id)" :key="todo._id"
+                :id="todo._id" class="border border-gray-800 rounded p-2 flex flex-col gap-2 bg-white bg-opacity-50"
+                draggable="true" @dragstart="handleDragStart(todo._id)" @dragend="handleDragEnd" @dragover.prevent.stop>
                 <RouterLink :to="'/auth/' + todo._id">
                   <CardTodo :todo="todo" />
                 </RouterLink>
@@ -38,11 +29,11 @@
               </li>
             </ul>
           </div>
-        </div>
-      </div>
+          <div class="h-12"  @dragover.prevent="handleDragOver" @drop.prevent="handleDrop" :id="status._id"></div>
+        </li>
+      </ul>
     </div>
   </div>
-
 </template>
 <script>
 
@@ -53,6 +44,7 @@ import { useStatusStore } from "../stores/status"
 export default {
   name: "Home",
   components: { CardTodo, AddTodoForm, UpdateTodoForm },
+  inject: ["serverUrl"],
   data() {
     return {
       todos: [],
@@ -66,9 +58,9 @@ export default {
     const statusStore = useStatusStore()
     return { statusStore }
   },
-  async created() {
+  async mounted() {
     try {
-      const response = await fetch("http://localhost:3400/api/todos")
+      const response = await fetch(`${this.serverUrl}/todos`)
       const data = await response.json()
       this.todos = data.data
     }
@@ -84,7 +76,7 @@ export default {
     },
     async fetchTodos() {
       try {
-        const response = await fetch("http://localhost:3400/api/todos")
+        const response = await fetch(`${this.serverUrl}/todos`)
         const data = await response.json()
         this.todos = data.data
       }
@@ -96,7 +88,7 @@ export default {
       try {
         const result = confirm("Are you sure to delete Todo?")
         if (result) {
-          const response = await fetch(`http://localhost:3400/api/todos/${id}`, {
+          const response = await fetch(`${this.serverUrl}/todos/${id}`, {
             method: "DELETE"
           });
           this.fetchTodos()
@@ -125,24 +117,24 @@ export default {
       this.draggedItem = 0
       this.dragZone = 0
     },
-    handleDragOver(event) {   
+    handleDragOver(event) {
       this.dragZone = event.target.id
       console.log(`Drag over ${this.dragZone} item ${this.draggedItem}`)
     },
     async handleDrop(event) {
-      this.dragZone = event.target.id
-     // this.draggedItem = event.dataTransfer.getData("item_id")
+      //this.dragZone = event.target.id
+      // this.draggedItem = event.dataTransfer.getData("item_id")
 
       console.log(`DROP task ${this.draggedItem} into ${this.dragZone}`)
       // update status
       try {
-        if(this.dragZone) {
-          const response = await fetch(`http://localhost:3400/api/todos/${this.draggedItem}`, {
+        if (this.dragZone) {
+          const response = await fetch(`${this.serverUrl}/todos/${this.draggedItem}`, {
             method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({"status_id": this.dragZone})
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ "status_id": this.dragZone })
           });
           console.log("Response fetch Patch", response)
           this.fetchTodos()

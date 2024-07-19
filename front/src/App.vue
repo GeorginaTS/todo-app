@@ -6,7 +6,7 @@
     <RouterView />
   </main>
   <footer class="h-8 div_primary w-full text-white flex justify-center items-center">
-    Todo app. made by Georgina on july 2024
+    Todo app. made by Georgina on july 2024  ------  {{ hostUrl }}. - .{{ serverUrl }}
   </footer>
 </template>
 <script>
@@ -17,6 +17,7 @@ import Header from "./components/Header.vue";
 export default {
   name: "App",
   components: {Header},
+  inject: ["hostUrl", "serverUrl"],
   data() {
     return {
     }
@@ -26,14 +27,14 @@ export default {
     const statusStore = useStatusStore()
     return { categoriesStore, statusStore }
   },
-  async created() {
+  async mounted() {
     this.fetchCategories()
     this.fetchStatus()
   },
   methods: {
     async fetchCategories() {
       try {
-        const response = await fetch("http://localhost:3400/api/categories")
+        const response = await fetch(`${this.serverUrl}/categories`)
         const categories = await response.json()
         //console.log("Categories", categories.data)
         this.categoriesStore.addCategories(categories.data)
@@ -43,7 +44,7 @@ export default {
     },
     async fetchStatus() {
       try {
-        const response2 = await fetch("http://localhost:3400/api/status")
+        const response2 = await fetch(`${this.serverUrl}/status`)
         const status = await response2.json()
         this.statusStore.addStatus(status.data)
         // console.log("Status", status.data, this.statusStore.status)

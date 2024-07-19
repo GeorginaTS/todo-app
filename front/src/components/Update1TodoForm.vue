@@ -24,6 +24,7 @@ import { useStatusStore } from "../stores/status"
 export default {
     name: "UpdateTodoForm",
     props: ["todoId"],
+    inject: ["serverUrl"],
     data() {
         return {
             todo: { title: "ToDo init", content: "" },
@@ -40,7 +41,7 @@ export default {
     },
     async mounted() {
         try {
-            const response = await fetch(`http://localhost:3400/api/todos/${this.todoId}`);
+            const response = await fetch(`${this.serverUrl}/todos/${this.todoId}`);
             const data = await response.json()
             //console.log("todo", todo[0])
             const todo = data.data
@@ -62,11 +63,11 @@ export default {
         async todoId(value) {
 
             try {
-                const response = await fetch(`http://localhost:3400/api/todos/${value}`)
+                const response = await fetch(`${this.serverUrl}/todos/${value}`)
                 const data = await response.json()
                 const todo = data.data
-                if (todo[0]) {
-                    this.todo = todo[0]
+                if (todo) {
+                    this.todo = todo
                     this.title = this.todo.title
                     this.content = this.todo.content
                     this.category = this.todo.category_id
@@ -92,7 +93,7 @@ export default {
             }
             console.log("id", this.todoId, "newTodo:", newTodo)
             try {
-                const response = await fetch(`http://localhost:3400/api/todos/${this.todoId}`, {
+                const response = await fetch(`${this.serverUrl}/todos/${this.todoId}`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json"

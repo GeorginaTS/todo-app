@@ -25,6 +25,7 @@ import StatusTag from "../components/StatusTag.vue";
 
 export default {
     name: "Detail",
+    inject: ["serverUrl"],
     data() {
         return {
             todo: {},
@@ -33,10 +34,10 @@ export default {
         }
     },
     components: { CategoryTag, StatusTag },
-    async created() {
+    async mounted() {
 
         try {
-            const response = await fetch(`http://localhost:3400/api/todos/${this.id}`);
+            const response = await fetch(`${this.serverUrl}/todos/${this.id}`);
             const data = await response.json()
             const todo = data.data
             //console.log("todo", todo)
@@ -54,7 +55,7 @@ export default {
     methods: {
         async deleteTodo() {
             try {
-                const response = await fetch(`http://localhost:3400/api/todos/${this.id}`, {
+                const response = await fetch(`${this.serverUrl}/todos/${this.id}`, {
                     method: "DELETE"
                 });
                 response.status(200).send({ msg: "deleted", id: this.id })
