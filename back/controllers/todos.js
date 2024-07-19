@@ -62,3 +62,16 @@ export const updateOneTodo = async (request, response) => {
     response.status(500).send({ msg: "Error updating Todo", error: error.message, id, todo });
   }
 };
+
+export const updateStatusTodo = async (request, response) => {
+  const { id } = request.params;
+  let status = request.body;
+  try {
+    const data = await todosModel.findByIdAndUpdate(id, status);
+    data
+      ? response.status(200).send({ msg: "UpdateOneTodo OK", data, id, status })
+      : response.status(404).send({ msg: "Todo Not found", id, status });
+  } catch (error) {
+    response.status(500).send({ msg: "Error updating Todo", error: error.message, id, status});
+  }
+};

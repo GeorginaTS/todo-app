@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full">
+   <div class="w-full">
     <div class="flex justify-center w-full">
       <div class="w-[80%] div_primary text-center p-2 rounded-lg" v-if="!addForm && !updateForm">
         <button @click="showAddForm()"  class="h-fit button_primary">Add New Task </button>
@@ -9,30 +9,38 @@
     </div>
 
     <div>
-      <ul v-if="statusStore" class="flex justify-between gap-4 m-2">
-        <li v-for="item in statusStore.status" :value="item._id" class="w-full rounded-lg p-2"
-          :style="{ backgroundColor: item.color }">
-          <h3>{{ item.name }}</h3>
+      <div v-if="statusStore" class="flex justify-between gap-4 m-2">
+        <div v-for="status in statusStore.status" 
+        :key="status._id" 
+        :id="status._id"
+        :value="status._id" class="w-full rounded-lg p-2"
+          :style="{ backgroundColor: status.color }" 
+          @dragover.prevent
+          @drop.prevent="handleDrop"
+          >
+          <h3>{{ status.name }}</h3>
           <div>
             <ul class="flex flex-col gap-2 p-4">
-              <li v-for="todo in todos.filter(element => element.status_id == item._id)" :key="todo._id"
-                class="border border-gray-800 rounded p-2 flex flex-col gap-2 bg-white bg-opacity-50">
+              <li v-for="todo in todos.filter(element => element.status_id == status._id)" 
+                :key="todo._id" 
+                :id="todo._id"
+                class="border border-gray-800 rounded p-2 flex flex-col gap-2 bg-white bg-opacity-50" draggable="true"
+                @dragstart="handleDragStart(todo._id)"
+                @dragend="handleDragEnd"
+                >
                 <RouterLink :to="'/auth/' + todo._id">
                   <CardTodo :todo="todo" />
                 </RouterLink>
-                <div class="bg-stone-200 flex justify-between gap-2 p-2 rounded">
-                  <button @click="updateTodo(todo._id)">✍️</button>
+                <div class="bg-stone-200 flex justify-between gap-2 p-2 rounded" v-if="draggedItem != todo._id">
+                  <button @click="showUpdateForm(todo._id)">✍️</button>
                   <button @click="deleteTodo(todo._id)">🗑️ </button>
                 </div>
               </li>
             </ul>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
-    <ul class="flex flex-wrap gap-2" v-if="todos">
-
-    </ul>
   </div>
 
 </template>
@@ -49,7 +57,9 @@ export default {
     return {
       todos: [],
       updateForm: 0,
-      addForm: 0
+      addForm: 0,
+      draggedItem: 0,
+      dragZone: 0
     }
   },
   setup() {
@@ -95,7 +105,7 @@ export default {
         console.error('Failed DeleteToDo');
       }
     },
-    updateTodo(id) {
+    showUpdateForm(id) {
       this.addForm = 0
       this.updateForm = id
     },
@@ -106,6 +116,41 @@ export default {
       } else {
         this.addForm = 1
       }
+    },
+    handleDragStart(id) {
+      //event.dataTransfer.setData("item_id", event.target.id)
+      this.draggedItem = id
+    },
+    handleDragEnd() {
+      this.draggedItem = 0
+      this.dragZone = 0
+    },
+    handleDragOver(event) {   
+      this.dragZone = event.target.id
+      console.log(`Drag over ${this.dragZone} item ${this.draggedItem}`)
+    },
+    async handleDrop(event) {
+      this.dragZone = event.target.id
+     // this.draggedItem = event.dataTransfer.getData("item_id")
+
+      console.log(`DROP task ${this.draggedItem} into ${this.dragZone}`)
+      // update status
+      try {
+        if(this.dragZone) {
+          const response = await fetch(`http://localhost:3400/api/todos/${this.draggedItem}`, {
+            method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({"status_id": this.dragZone})
+          });
+          console.log("Response fetch Patch", response)
+          this.fetchTodos()
+        }
+      } catch {
+        console.error('Failed Patch Status ToDo');
+      }
+      // fetch todos
     }
   }
 }
