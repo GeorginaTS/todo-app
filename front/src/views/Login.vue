@@ -3,7 +3,9 @@
     <div class="w-full p-4 flex flex-col justify-center items-center h-full">
       <h1>Welcome to toDo APP</h1>
       <br><br><br>
-      <h3>Register o Sign-in</h3>
+      <RouterLink to="/register">
+      <button class="button_primary">Register</button>
+    </RouterLink>
     </div>
     <div class="w-full flex justify-center items-center">
       <div class="flex flex-col gap-4 div_green1 p-12 rounded-lg w-[80%]">

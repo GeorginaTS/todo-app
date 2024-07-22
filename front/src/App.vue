@@ -4,7 +4,7 @@
     <RouterView />
   </main>
   <footer class="h-8 div_primary w-full text-white flex justify-center items-center">
-    Todo app. made by Georgina on july 2024  ------  {{ hostUrl }}. - .{{ serverUrl }}
+    Todo app. made by Georgina on july 2024 
   </footer>
 </template>
 <script>
