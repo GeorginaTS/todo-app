@@ -15,9 +15,14 @@
   </div>
 </template>
 <script>
+import { useUserStore } from "../stores/user"
 export default {
   name: "Login",
   inject: ["serverUrl", "hostUrl"],
+  setup() {
+        const userStore = useUserStore()
+        return { userStore }
+    },
   data() {
     return {
       email: "georgina@merit.com",
@@ -36,9 +41,13 @@ export default {
                     body: JSON.stringify({"email":this.email, "password": this.password})
                 })
                 const data = await response.json()
+                //console.log(data)
                 this.token = data.token
                 localStorage.setItem("token", data.token)
-                console.log("Data fetch", data, "token localStorage", localStorage.getItem("token"))
+                this.userStore.token = this.token
+                this.userStore.loggedIn = true
+                this.userStore.user = data.user
+                this.$router.push('/auth');
       }
       catch(error) {
         response.send({ msg: "Error", error: error.message })

@@ -1,7 +1,8 @@
 <template>
   <div class="w-full">
     <div class="flex justify-center w-full">
-        <button @click="showAddForm()" class="h-fit button_primary my-2"  v-if="!addForm && !updateForm">Add New Task </button>
+      <button @click="showAddForm()" class="h-fit button_primary my-2" v-if="!addForm && !updateForm">Add New Task
+      </button>
       <AddTodoForm v-if="addForm" @todosUpdated="todosListUpdate" />
       <UpdateTodoForm v-if="updateForm" :todoId="updateForm" @todosUpdated="todosListUpdate" />
     </div>
@@ -15,7 +16,7 @@
             {{ status.name }}
           </h3>
           <div>
-            <ul class="flex flex-col gap-2 p-4">
+            <ul class="flex flex-col gap-2 p-4" v-if="todos">
               <li v-for="todo in todos.filter(element => element.status_id == status._id)" :key="todo._id"
                 :id="todo._id" class="border border-gray-800 rounded p-2 flex flex-col gap-2 bg-white bg-opacity-50"
                 draggable="true" @dragstart="handleDragStart(todo._id)" @dragend="handleDragEnd" @dragover.prevent.stop>
@@ -29,7 +30,7 @@
               </li>
             </ul>
           </div>
-          <div class="h-12"  @dragover.prevent="handleDragOver" @drop.prevent="handleDrop" :id="status._id"></div>
+          <div class="h-12" @dragover.prevent="handleDragOver" @drop.prevent="handleDrop" :id="status._id"></div>
         </li>
       </ul>
     </div>
@@ -41,6 +42,8 @@ import UpdateTodoForm from "../components/Update1TodoForm.vue";
 import AddTodoForm from "../components/AddTodoForm.vue";
 import CardTodo from "../components/CardTodo.vue";
 import { useStatusStore } from "../stores/status"
+import { useUserStore } from "../stores/user"
+
 export default {
   name: "Home",
   components: { CardTodo, AddTodoForm, UpdateTodoForm },
@@ -56,16 +59,25 @@ export default {
   },
   setup() {
     const statusStore = useStatusStore()
-    return { statusStore }
+    const userStore = useUserStore()
+    return { statusStore, userStore }
   },
   async mounted() {
     try {
-      const response = await fetch(`${this.serverUrl}/todos`)
+      const response = await fetch(`${this.serverUrl}/todos`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${this.userStore.token}`
+          }
+        }
+      )
       const data = await response.json()
       this.todos = data.data
     }
     catch (error) {
       console.log(error)
+      this.$router.push("/")
     }
   },
   methods: {
@@ -76,7 +88,14 @@ export default {
     },
     async fetchTodos() {
       try {
-        const response = await fetch(`${this.serverUrl}/todos`)
+        const response = await fetch(`${this.serverUrl}/todos`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${this.userStore.token}`
+            }
+          }
+        )
         const data = await response.json()
         this.todos = data.data
       }
@@ -89,7 +108,11 @@ export default {
         const result = confirm("Are you sure to delete Todo?")
         if (result) {
           const response = await fetch(`${this.serverUrl}/todos/${id}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${this.userStore.token}`
+            }
           });
           this.fetchTodos()
         }
@@ -132,7 +155,9 @@ export default {
           const response = await fetch(`${this.serverUrl}/todos/${this.draggedItem}`, {
             method: "PATCH",
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${this.userStore.token}`
+
             },
             body: JSON.stringify({ "status_id": this.dragZone })
           });

@@ -20,6 +20,7 @@
 <script>
 import { useCategoriesStore } from "../stores/categories"
 import { useStatusStore } from "../stores/status"
+import { useUserStore } from "../stores/user"
 
 export default {
     name: "UpdateTodoForm",
@@ -31,19 +32,27 @@ export default {
             title: "",
             content: "",
             category: 0,
-            status:0
+            status: 0
         }
     },
     setup() {
         const categoriesStore = useCategoriesStore()
         const statusStore = useStatusStore()
-        return { categoriesStore, statusStore }
+        const userStore = useUserStore()
+        return { categoriesStore, statusStore, userStore }
     },
     async mounted() {
         try {
-            const response = await fetch(`${this.serverUrl}/todos/${this.todoId}`);
+            console.log("user_id", this.userStore.user._id)
+            const response = await fetch(`${this.serverUrl}/todos/${this.todoId}`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${this.userStore.token}`
+                    }
+                }
+            );
             const data = await response.json()
-            //console.log("todo", todo[0])
             const todo = data.data
             if (todo) {
                 this.todo = todo
@@ -63,7 +72,14 @@ export default {
         async todoId(value) {
 
             try {
-                const response = await fetch(`${this.serverUrl}/todos/${value}`)
+                const response = await fetch(`${this.serverUrl}/todos/${value}`,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${this.userStore.token}`
+                        }
+                    }
+                )
                 const data = await response.json()
                 const todo = data.data
                 if (todo) {
@@ -80,7 +96,6 @@ export default {
                 response.send({ msg: "Error", error: error.message })
             }
         },
-
     },
     methods: {
         async updateTodo() {
@@ -88,7 +103,7 @@ export default {
                 title: this.title,
                 content: this.content,
                 category_id: this.category,
-                user_id: "668819a2217fa500b101ce64",
+                user_id: this.userStore.user._id,
                 status_id: this.status
             }
             console.log("id", this.todoId, "newTodo:", newTodo)
@@ -96,7 +111,8 @@ export default {
                 const response = await fetch(`${this.serverUrl}/todos/${this.todoId}`, {
                     method: "PUT",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${this.userStore.token}`
                     },
                     body: JSON.stringify(newTodo)
                 })

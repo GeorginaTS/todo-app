@@ -12,7 +12,8 @@
           </h1>
         </div>
         </RouterLink>
-        <nav class="w-fit flex gap-2 items-center mx-2">
+        <div>LoggedIn: {{userStore.loggedIn}}</div>
+        <nav class="w-fit flex gap-2 items-center mx-2" v-if="userStore.loggedIn">
           <RouterLink to="/auth"><button>Home</button> </RouterLink>
           <RouterLink to="/auth"><button>Profile</button></RouterLink>
         </nav>
@@ -21,7 +22,13 @@
     </header>
 </template>
 <script>
+import { useUserStore } from "../stores/user"
 export default {
+  name:"Header",
+  setup() {
+        const userStore = useUserStore()
+        return { userStore }
+    },
     
 }
 </script>

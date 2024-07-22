@@ -15,6 +15,7 @@
 </template>
 <script>
 import { useCategoriesStore } from "../stores/categories"
+import { useUserStore } from "../stores/user"
 export default {
     name: "AddTodoForm",
     inject: ["serverUrl"],
@@ -27,7 +28,8 @@ export default {
     },
     setup() {
         const categoriesStore = useCategoriesStore()
-        return { categoriesStore }
+        const userStore = useUserStore()
+        return { categoriesStore, userStore }
     },
     methods: {
         async addTodo() {
@@ -35,7 +37,7 @@ export default {
                 title: this.title,
                 content: this.content,
                 category_id: this.category,
-                user_id: "668819a2217fa500b101ce64",
+                user_id: this.userStore.user._id,
                 status_id: "6697b6a989b66f6dd49da2f5"
             }
             console.log(newTodo)
@@ -43,7 +45,8 @@ export default {
                 const response = await fetch(`${this.serverUrl}/todos`, {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${this.userStore.token}`
                     },
                     body: JSON.stringify(newTodo)
                 })

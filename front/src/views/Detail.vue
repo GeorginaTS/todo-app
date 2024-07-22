@@ -23,6 +23,8 @@
 import CategoryTag from "../components/CategoryTag.vue";
 import StatusTag from "../components/StatusTag.vue";
 
+import { useUserStore } from "../stores/user"
+
 export default {
     name: "Detail",
     inject: ["serverUrl"],
@@ -33,30 +35,46 @@ export default {
             category: {}
         }
     },
+    setup() {
+
+        const userStore = useUserStore()
+        return { userStore }
+    },
     components: { CategoryTag, StatusTag },
     async mounted() {
 
         try {
-            const response = await fetch(`${this.serverUrl}/todos/${this.id}`);
+            const response = await fetch(`${this.serverUrl}/todos/${this.id}`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${this.userStore.token}`
+                    }
+                }
+            );
             const data = await response.json()
             const todo = data.data
-            //console.log("todo", todo)
+
 
             if (todo) {
                 this.todo = todo
             } else {
                 this.todo = { title: "ToDo don't exist", content: "" }
             }
-
         } catch {
             console.error('Failed');
+            this.$router.push("/")
         }
     },
     methods: {
         async deleteTodo() {
             try {
                 const response = await fetch(`${this.serverUrl}/todos/${this.id}`, {
-                    method: "DELETE"
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${this.userStore.token}`
+                    }
                 });
                 response.status(200).send({ msg: "deleted", id: this.id })
             } catch {

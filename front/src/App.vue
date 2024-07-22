@@ -1,5 +1,4 @@
 <template>
-  
   <Header />
   <main class="h-full w-full">
     <RouterView />
@@ -11,6 +10,7 @@
 <script>
 import { useCategoriesStore } from "./stores/categories"
 import { useStatusStore } from "./stores/status"
+import { useUserStore } from "./stores/user"
 import Header from "./components/Header.vue";
 
 export default {
@@ -24,7 +24,8 @@ export default {
   setup() {
     const categoriesStore = useCategoriesStore()
     const statusStore = useStatusStore()
-    return { categoriesStore, statusStore }
+    const userStore = useUserStore()
+    return { categoriesStore, statusStore, userStore }
   },
   async mounted() {
     this.fetchCategories()
