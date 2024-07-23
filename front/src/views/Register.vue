@@ -23,7 +23,7 @@
 
 
         </div>
-        <div class="w-[90%] div_green3 p-4  rounded-lg flex gap-8">
+        <div class="w-[90%] div_green3 p-4  rounded-lg flex gap-8 items-center justify-between">
             <div class="flex gap-2">
                 <div class="inline-flex items-center">
                     <label class="relative flex items-center p-3 rounded-full cursor-pointer" htmlFor="check">
@@ -44,10 +44,10 @@
                 </div>
 
             </div>
-            <button class="button_primary" v-if="policy" @click="createUser">Register</button>
-            <div class="button_primary px-10 py-2 opacity-50" v-else>Register</div>
-            <div class="bg-slate-200 w-96">
-                <div v-for="error in errors">Error:{{ error }}</div>
+            <button class="button_primary h-fit" v-if="policy" @click="createUser">Register</button>
+            <div class="button_primary px-10 py-2 opacity-50 h-fit" v-else>Register</div>
+            <div class="bg-slate-200 w-96 p-2" v-if="errors.length>0">
+                <div v-for="error in errors">Error: {{ error }}</div>
             </div>
         </div>
     </div>
