@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-import { useCategoriesStore } from "../stores/categories"
+import { useCategoriesStore } from "../stores/categories.js"
 export default {
     name: "CategoryTag",
     data() {
@@ -17,8 +17,8 @@ export default {
         const categoriesStore = useCategoriesStore()
         return { categoriesStore }
     },
-    created() {      
-        this.category = this.categoriesStore.categories.find((item) => item.id == this.id)
+    mounted() { 
+        this.category = this.categoriesStore.categories.find((item) => item._id == this.id)
     }
 
 }

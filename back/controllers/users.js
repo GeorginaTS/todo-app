@@ -125,7 +125,7 @@ export const userPage = async (request, response) => {
       // VERIFICAMOS QUE EL TOKEN COINCIDA CON LA CONTRASENA
       if (err) return res.status(403).send({ msg: "Token invalid" });
       //request.token = user;
-      response.status(200).json({ msg: "user Auth Page", data: user.user });
+      response.status(200).json({ msg: "user Auth Page", data: user.user, token });
     });
     
   } catch (error) {

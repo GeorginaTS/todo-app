@@ -1,14 +1,16 @@
 <template>
-    <div class="bg-stone-200 w-[90%] flex flex-col gap-2 p-4">
+    <div class="bg-stone-200 w-[90%] flex flex-col gap-2 p-4 rounded-b-lg">
         <h2 class="text-xl font-bold">Update ToDo with id: {{ todoId }}</h2>
         <form class="flex flex-col gap-2" @submit="addTodo" v-if="todo">
-            {{ todo }}
             Title: <input type="text" v-model="title">
             Content: <textarea v-model="content"></textarea>
             Category:
             <select v-model="category" class="text-black">
-                <option value="0">Select One</option>
-                <option v-for="item in categoriesStore.categories" :value="item.id">{{ item.name }}</option>
+                <option v-for="item in categoriesStore.categories" :value="item._id">{{ item.name }}</option>
+            </select>
+            Status:
+            <select v-model="status" class="text-black">
+                <option v-for="item in statusStore.status" :value="item._id">{{ item.name }}</option>
             </select>
         </form>
         <button type="submit" @click="updateTodo(todo.id)"
@@ -17,32 +19,47 @@
 </template>
 <script>
 import { useCategoriesStore } from "../stores/categories"
+import { useStatusStore } from "../stores/status"
+import { useUserStore } from "../stores/user"
+
 export default {
     name: "UpdateTodoForm",
     props: ["todoId"],
+    inject: ["serverUrl"],
     data() {
         return {
             todo: { title: "ToDo init", content: "" },
             title: "",
             content: "",
-            category: 0
+            category: 0,
+            status: 0
         }
     },
     setup() {
         const categoriesStore = useCategoriesStore()
-        return { categoriesStore }
+        const statusStore = useStatusStore()
+        const userStore = useUserStore()
+        return { categoriesStore, statusStore, userStore }
     },
     async mounted() {
         try {
-            const response = await fetch(`http://localhost:3400/api/todos/${this.todoId}`);
-            const todo = await response.json()
-            //console.log("todo", todo[0])
-
-            if (todo[0]) {
-                this.todo = todo[0]
+            console.log("user_id", this.userStore.user._id)
+            const response = await fetch(`${this.serverUrl}/todos/${this.todoId}`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${this.userStore.token}`
+                    }
+                }
+            );
+            const data = await response.json()
+            const todo = data.data
+            if (todo) {
+                this.todo = todo
                 this.title = this.todo.title
                 this.content = this.todo.content
-                this.category = this.todo.idcategory
+                this.category = this.todo.category_id
+                this.status = this.todo.status_id
             } else {
                 this.todo = { title: "ToDo dpon't exist", content: "" }
             }
@@ -55,14 +72,22 @@ export default {
         async todoId(value) {
 
             try {
-                const response = await fetch(`http://localhost:3400/api/todos/${value}`)
+                const response = await fetch(`${this.serverUrl}/todos/${value}`,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${this.userStore.token}`
+                        }
+                    }
+                )
                 const data = await response.json()
                 const todo = data.data
-                if (todo[0]) {
-                    this.todo = todo[0]
+                if (todo) {
+                    this.todo = todo
                     this.title = this.todo.title
                     this.content = this.todo.content
-                    this.category = this.todo.idcategory
+                    this.category = this.todo.category_id
+                    this.status = this.todo.status_id
                 } else {
                     this.todo = { title: "ToDo don't exist", content: "" }
                 }
@@ -71,30 +96,34 @@ export default {
                 response.send({ msg: "Error", error: error.message })
             }
         },
-
     },
     methods: {
         async updateTodo() {
             const newTodo = {
                 title: this.title,
                 content: this.content,
-                idcategory: this.category,
-                iduser: 1,
-                status: 1
+                category_id: this.category,
+                user_id: this.userStore.user._id,
+                status_id: this.status
             }
             console.log("id", this.todoId, "newTodo:", newTodo)
             try {
-                const response = await fetch(`http://localhost:3001/api/todos/${this.todoId}`, {
+                const response = await fetch(`${this.serverUrl}/todos/${this.todoId}`, {
                     method: "PUT",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${this.userStore.token}`
                     },
                     body: JSON.stringify(newTodo)
                 })
                 const todo = await response.json()
+
+                this.$emit('todosUpdated', 1);
+
                 this.title = ""
                 this.content = ""
                 this.category = 0
+                this.status = 0
                 console.log("Todo updated", todo)
 
             } catch (error) {

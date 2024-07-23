@@ -10,8 +10,8 @@ export const useCategoriesStore = defineStore("categories", {
   actions: {
     addCategories(value) {
         try {
-            value.forEach((element) => this.categories.push(element))
-            //this.categories.push(value)
+            this.categories = []
+          value.forEach((element) => this.categories.push(element))
           }
           catch(error) {
             console.log({error: error.message})

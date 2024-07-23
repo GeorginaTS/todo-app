@@ -17,8 +17,8 @@ export default {
         const statusStore = useStatusStore()
         return { statusStore }
     },
-    created() {      
-        this.status = this.statusStore.status.find((item) => item.id == this.id)
+    created() {   
+        this.status = this.statusStore.status.find((item) => item._id == this.id)
     }
 
 }
