@@ -1,9 +1,9 @@
 <template>
     <div class="w-full h-full flex flex-col gap-4 justify-center items-center">
-        <h3 class="div_green1 w-[90%] p-4 rounded-lg">
+        <h3 class="bg-green1 w-[90%] p-4 rounded-lg">
             Register your account and use Todo app everyday!
         </h3>
-        <div class="div_green2 w-[90%] p-4 rounded-lg flex flex-col gap-2">
+        <div class="bg-green2 w-[90%] p-4 rounded-lg flex flex-col gap-2">
             <div>Full name: <br> <input type="text" id="name" v-model="name" class="w-96"></div>
             <div>Email: <br> <input type="email" id="email" v-model="email" class="w-96"></div>
             <hr class="my-2">
@@ -23,7 +23,7 @@
 
 
         </div>
-        <div class="w-[90%] div_green3 p-4  rounded-lg flex gap-8 items-center justify-between">
+        <div class="w-[90%] bg-green3 p-4  rounded-lg flex gap-8 items-center justify-between">
             <div class="flex gap-2">
                 <div class="inline-flex items-center">
                     <label class="relative flex items-center p-3 rounded-full cursor-pointer" htmlFor="check">

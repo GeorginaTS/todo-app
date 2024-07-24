@@ -3,7 +3,7 @@
   <main class="h-full w-full">
     <RouterView />
   </main>
-  <footer class="h-8 div_primary w-full text-white flex justify-center items-center">
+  <footer class="h-8 bg-primaryColor w-full text-white flex justify-center items-center">
     Todo app. made by Georgina on july 2024 
   </footer>
 </template>
