@@ -15,6 +15,9 @@
         </form>
         <button type="submit" @click="updateTodo(todo.id)"
             class="border border-stone-500 py-2 px-10 bg-white w-fit">Update</button>
+        <div class="bg-slate-200 w-96 p-2" v-if="errors.length > 0">
+            <div v-for="error in errors">Error: {{ error }}</div>
+        </div>
     </div>
 </template>
 <script>
@@ -32,7 +35,8 @@ export default {
             title: "",
             content: "",
             category: 0,
-            status: 0
+            status: 0,
+            errors: []
         }
     },
     setup() {
@@ -98,41 +102,63 @@ export default {
         },
     },
     methods: {
+        verifyForm() {
+            this.errors = []
+            if (this.title.length < 9) {
+                this.errors.push("Write Title, min length 8")
+            }
+            if (this.content.length < 9) {
+                this.errors.push("Write content, , min length 8");
+            }
+            if (this.category == 0) {
+                this.errors.push("Category is required")
+            }
+            if (this.status == 0) {
+                this.errors.push("Status is required")
+            }
+            if (this.errors.length > 0) {
+                return false
+            } else {
+                return true
+            }
+        },
         async updateTodo() {
-            const newTodo = {
-                title: this.title,
-                content: this.content,
-                category_id: this.category,
-                user_id: this.userStore.user._id,
-                status_id: this.status
+            this.verifyForm()
+            if (this.verifyForm()) {
+                const newTodo = {
+                    title: this.title,
+                    content: this.content,
+                    category_id: this.category,
+                    user_id: this.userStore.user._id,
+                    status_id: this.status
+                }
+                console.log("id", this.todoId, "newTodo:", newTodo)
+                try {
+                    const response = await fetch(`${this.serverUrl}/todos/${this.todoId}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${this.userStore.token}`
+                        },
+                        body: JSON.stringify(newTodo)
+                    })
+                    const todo = await response.json()
+
+                    this.$emit('todosUpdated', 1);
+
+                    this.title = ""
+                    this.content = ""
+                    this.category = 0
+                    this.status = 0
+                    console.log("Todo updated", todo)
+
+                } catch (error) {
+                    console.log({ msg: "Error", error: error.message })
+                }
+
             }
-            console.log("id", this.todoId, "newTodo:", newTodo)
-            try {
-                const response = await fetch(`${this.serverUrl}/todos/${this.todoId}`, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${this.userStore.token}`
-                    },
-                    body: JSON.stringify(newTodo)
-                })
-                const todo = await response.json()
-
-                this.$emit('todosUpdated', 1);
-
-                this.title = ""
-                this.content = ""
-                this.category = 0
-                this.status = 0
-                console.log("Todo updated", todo)
-
-            } catch (error) {
-                console.log({ msg: "Error", error: error.message })
-            }
-
         }
     }
-
 }
 </script>
 <style></style>
