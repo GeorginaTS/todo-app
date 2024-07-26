@@ -1,22 +1,14 @@
 <template>
-    <div class="flex flex-col items-center h-full">
-        <div class=" border border-stone-800 w-[90%]" v-if="todo">
-            <h1 class="text-ml bg-stone-300 p-2">User {{ todo.user_id }}</h1>
-            <h2 class="font-bold p-2 text-xl">{{ todo.title }}</h2>
-            <div class="flex justify-between p-4">
-                <CategoryTag :id="todo.category_id" v-if="todo.category_id" />
-                <StatusTag :id="todo.status_id" v-if="todo.status_id" />
-
-            </div>
-
-            <p class="p-2 bg-stone-200 flex">{{ todo.content }}</p>
-
-            <p class="text-xs text-stone-600 flex justify-end p-1">{{ todo.createdAt }}</p>
+    <div class="flex flex-col items-center h-full gap-2" v-if="todo">
+        <div class="w-[90%] bg-green1 p-4  rounded-lg flex justify-between items-center">
+            <h1 >{{ todo.title }}</h1>
+            <CategoryTag :id="todo.category_id" v-if="todo.category_id" />
         </div>
-        <!-- <div>
-        <button @click="deleteTodo" class="bg-red-600 p-2 rounded m-2">Delete</button>
-    </div> -->
-        {{ todo }}
+        
+        <div class="w-[90%] p-4 bg-green2 flex flex-col rounded-lg">
+            <p>{{ todo.content }}</p>
+        </div>
+        <div class="text-xs flex justify-between p-4 w-[90%] bg-green3 rounded-lg items-center"> <StatusTag :id="todo.status_id" v-if="todo.status_id" /> {{ todo.createdAt }}</div>
     </div>
 </template>
 <script>
@@ -64,22 +56,6 @@ export default {
         } catch {
             console.error('Failed');
             this.$router.push("/")
-        }
-    },
-    methods: {
-        async deleteTodo() {
-            try {
-                const response = await fetch(`${this.serverUrl}/todos/${this.id}`, {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${this.userStore.token}`
-                    }
-                });
-                response.status(200).send({ msg: "deleted", id: this.id })
-            } catch {
-                console.error('Failed');
-            }
         }
     }
 

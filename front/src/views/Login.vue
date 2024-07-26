@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-10 p-4 justify-between w-full div_green2 h-full">
+  <div class="flex gap-10 p-4 justify-between w-full bg-green2 h-full">
     <div class="w-full p-4 flex flex-col justify-center items-center h-full">
       <h1>Welcome to toDo APP</h1>
       <br><br><br>
@@ -8,7 +8,7 @@
       </RouterLink>
     </div>
     <div class="w-full flex justify-center items-center">
-      <div class="flex flex-col gap-4 div_green1 p-12 rounded-lg w-[80%]">
+      <div class="flex flex-col gap-4 bg-green1 p-12 rounded-lg w-[80%]">
         <input type="email" name="email" id="email" v-model="email" placeholder="Enter email address">
         <input type="password" name="password" id="password" v-model="password" placeholder="Enter password">
         <button class="button_primary" @click="login">Sign-in</button>

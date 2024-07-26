@@ -44,15 +44,3 @@ button {
   color: white;
   font-weight: bold;  
 }
-.div_primary{
-  background-color: var(--primary-color);
-}
-.div_green1{
-  background-color: var(--green1);
-}
-.div_green2{
-  background-color: var(--green2);
-}
-.div_green3{
-  background-color: var(--green3);
-}
