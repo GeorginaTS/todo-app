@@ -1,14 +1,14 @@
 <template>
     <div class="flex flex-col items-center h-full gap-2" v-if="todo">
-        <h1 class="w-[90%] bg-green1 p-4  rounded-lg">{{ todo.title }}</h1>
-        <div class="w-[90%] p-2 bg-white border border-green2 flex flex-col rounded-lg">
-            <div class="flex  justify-between items-center p-4">
-                <CategoryTag :id="todo.category_id" v-if="todo.category_id" />
-                <StatusTag :id="todo.status_id" v-if="todo.status_id" />
-            </div>
-            <p class="p-4 bg-white opacity-55">{{ todo.content }}</p>
+        <div class="w-[90%] bg-green1 p-4  rounded-lg flex justify-between items-center">
+            <h1 >{{ todo.title }}</h1>
+            <CategoryTag :id="todo.category_id" v-if="todo.category_id" />
         </div>
-        <div class="text-xs flex justify-end p-2 w-[90%] bg-green3 rounded-lg">{{ todo.createdAt }}</div>
+        
+        <div class="w-[90%] p-4 bg-green2 flex flex-col rounded-lg">
+            <p>{{ todo.content }}</p>
+        </div>
+        <div class="text-xs flex justify-between p-4 w-[90%] bg-green3 rounded-lg items-center"> <StatusTag :id="todo.status_id" v-if="todo.status_id" /> {{ todo.createdAt }}</div>
     </div>
 </template>
 <script>
