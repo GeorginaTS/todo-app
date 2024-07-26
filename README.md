@@ -41,11 +41,14 @@ For login and user validation I used JWT (JSON Web Token) and bcrypt to encrypt 
 
 #### Endpoints
 
+```
 "/api/users"
     POST  "/login" - Validate password with token and bcrypt
     GET   "/:id" - Response with all user information
     POST  "/auth" - Verification token and password
+```
 
+```
 "/api/todos" - all routes Authorization with token
     GET "/" - Response with all tasks for user
     GET "/:id" - get one task
@@ -53,9 +56,13 @@ For login and user validation I used JWT (JSON Web Token) and bcrypt to encrypt 
     PUT "/:id" - Update the task with id, , task info validation with express-validator
     PATCH "/:id" - Update status of task
     DELETE "/:id" - Delete task
+```
 
+```
 "/api/categories"
     GET "/" - get all categories
-
+```
+```
 "/api/status"
     GET "/" - get all status
+```
