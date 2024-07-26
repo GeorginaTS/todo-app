@@ -2,7 +2,7 @@
 
 ## Full stack application
 
-### FRONTEND
+## FRONTEND
 
 Small app to keep tasks organized. Keep it simple 😊
 
@@ -32,9 +32,17 @@ I have used:
 <img src="./assets/img/captura-register.png" alt="Register view" width="30%">
 <img src="./assets/img/captura-home.png" alt="Home view" width="30%">
 
+#### ENVIROMENT 
+
+```
+
+.provide("hostUrl", "http://localhost:5173")
+.provide("serverUrl", "http://localhost:3400/api")
+
+```
 <hr /><hr />
 
-### BACKEND
+## BACKEND
 
 For the backend I used express and mongoose.
 For login and user validation I used JWT (JSON Web Token) and bcrypt to encrypt the passwords that are stored in the Mongo Atlas database.
@@ -44,7 +52,7 @@ For login and user validation I used JWT (JSON Web Token) and bcrypt to encrypt 
 ```
 "/api/users"
     POST  "/login" - Validate password with token and bcrypt
-    GET   "/:id" - Response with all user information
+    GET   "/:id" - Response with all user information, validated with token
     POST  "/auth" - Verification token and password
 ```
 
@@ -66,3 +74,108 @@ For login and user validation I used JWT (JSON Web Token) and bcrypt to encrypt 
 "/api/status"
     GET "/" - get all status
 ```
+
+
+### MONGO DB
+
+```
+const userSchema = new mongoose.Schema(
+    {
+        id:{
+            type: mongoose.Types.ObjectId
+        },
+        name: {
+            type: String
+        },
+        email: {
+            type: String
+        },
+        password: {
+            type: String
+        },
+        profile: {
+            type: String
+        },
+        active:{
+            type: Boolean
+        }
+    },
+    {
+        //marcas de tiempo
+        timestamps: true,
+        versionKey: false
+    }
+)
+```
+```
+const todoSchema = new mongoose.Schema(
+    {
+        id:{
+            type: mongoose.Types.ObjectId
+        },
+        title: {
+            type: String
+        },
+        content: {
+            type: String
+        },
+        user_id: {
+            type: String
+        },
+        category_id: {
+            type: String
+        },
+        status_id:{
+            type: String
+        }
+    },
+    {
+        //marcas de tiempo
+        timestamps: true,
+        versionKey: false
+    }
+)
+```
+```
+const statusRouter = new mongoose.Schema(
+    {
+        id:{
+            type: mongoose.Types.ObjectId
+        },
+        name: {
+            type: String
+        },
+        color: {
+            type: String
+        }
+    },
+    {
+        //marcas de tiempo
+        timestamps: true,
+        versionKey: false
+    }
+)
+
+const categorySchema = new mongoose.Schema(
+    {
+        id:{
+            type: mongoose.Types.ObjectId
+        },
+        name: {
+            type: String
+        },
+        color: {
+            type: String
+        }
+    },
+    {
+        //marcas de tiempo
+        timestamps: true,
+        versionKey: false
+    }
+)
+```
+#### ENVIROMENT
+PORT = 3400
+DB_URI = mongodb+srv://georginats6:</password/>@cluster0.ayclqfu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+TOKEN_SECRET = </secret_word/>
