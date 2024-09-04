@@ -2,19 +2,25 @@
 
 ## Full stack application
 
+#### Small app to keep tasks organized. Keep it simple 😊
+
+#### Kan-ban desk with Drag and Drop.
+
 ## FRONTEND
+```
+cd front
+npm run dev
+```
 
-Small app to keep tasks organized. Keep it simple 😊
 
-Kan-ban desk with Drag and Drop.
 
 Made with Vue 3 with Vite.
 
-I have used:
+I've'used:
 
 - Tailwind to styling
 - Vue router for routing
-- Pinia to have 3 screens: categories, status and user data.
+- Pinia to have 3 stores: categories, status and user.
 
 #### Routes
 
@@ -40,12 +46,18 @@ I have used:
 .provide("serverUrl", "http://localhost:3400/api")
 
 ```
+
 <hr /><hr />
 
-## BACKEND
 
-For the backend I used express and mongoose.
-For login and user validation I used JWT (JSON Web Token) and bcrypt to encrypt the passwords that are stored in the Mongo Atlas database.
+## BACKEND
+```
+cd front
+npm run dev
+```
+- nodeJS, express and mongoose
+- JWT (JSON Web Token)
+- bcrypt to encrypt the passwords that are stored in the Mongo Atlas database.
 
 #### Endpoints
 
@@ -101,7 +113,6 @@ const userSchema = new mongoose.Schema(
         }
     },
     {
-        //marcas de tiempo
         timestamps: true,
         versionKey: false
     }
@@ -130,7 +141,6 @@ const todoSchema = new mongoose.Schema(
         }
     },
     {
-        //marcas de tiempo
         timestamps: true,
         versionKey: false
     }
@@ -150,7 +160,6 @@ const statusRouter = new mongoose.Schema(
         }
     },
     {
-        //marcas de tiempo
         timestamps: true,
         versionKey: false
     }
@@ -169,13 +178,16 @@ const categorySchema = new mongoose.Schema(
         }
     },
     {
-        //marcas de tiempo
         timestamps: true,
         versionKey: false
     }
 )
 ```
 #### ENVIROMENT
+```
 PORT = 3400
+
 DB_URI = mongodb+srv://georginats6:</password/>@cluster0.ayclqfu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
 TOKEN_SECRET = </secret_word/>
+```
