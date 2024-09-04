@@ -6,10 +6,10 @@
 
 #### Kan-ban desk with Drag and Drop
 
-```
+
 ## Visit it. ##
 [https://georgina-todoapp.netlify.app](https://georgina-todoapp.netlify.app) 
-```
+
 
 ## FRONTEND
 
