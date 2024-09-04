@@ -52,8 +52,8 @@ I've'used:
 
 ## BACKEND
 ```
-cd front
-npm run dev
+cd back
+npm start
 ```
 - nodeJS, express and mongoose
 - JWT (JSON Web Token)
