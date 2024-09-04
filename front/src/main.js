@@ -8,8 +8,8 @@ const pinia = createPinia();
 createApp(App)
   .use(pinia)
   .use(router)
-  .provide("hostUrl", "https://georgina-todoapp.netlify.app/")
-  .provide("serverUrl", "https://todo-app-ga76.onrender/")
+  .provide("hostUrl", "https://georgina-todoapp.netlify.app")
+  .provide("serverUrl", "https://todo-app-ga76.onrender")
   //.provide("hostUrl", "http://localhost:5173")
   //.provide("serverUrl", "http://localhost:3400/api")
   .mount("#app");
