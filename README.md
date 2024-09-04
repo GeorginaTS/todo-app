@@ -4,15 +4,19 @@
 
 #### Small app to keep tasks organized. Keep it simple 😊
 
-#### Kan-ban desk with Drag and Drop.
+#### Kan-ban desk with Drag and Drop
+
+```
+## Visit it. ##
+[https://georgina-todoapp.netlify.app](https://georgina-todoapp.netlify.app) 
+```
 
 ## FRONTEND
+
 ```
 cd front
 npm run dev
 ```
-
-
 
 Made with Vue 3 with Vite.
 
@@ -38,7 +42,7 @@ I've'used:
 <img src="./assets/img/captura-register.png" alt="Register view" width="30%">
 <img src="./assets/img/captura-home.png" alt="Home view" width="30%">
 
-#### ENVIROMENT 
+#### ENVIROMENT
 
 ```
 
@@ -49,12 +53,13 @@ I've'used:
 
 <hr /><hr />
 
-
 ## BACKEND
+
 ```
 cd back
 npm start
 ```
+
 - nodeJS, express and mongoose
 - JWT (JSON Web Token)
 - bcrypt to encrypt the passwords that are stored in the Mongo Atlas database.
@@ -82,11 +87,11 @@ npm start
 "/api/categories"
     GET "/" - get all categories
 ```
+
 ```
 "/api/status"
     GET "/" - get all status
 ```
-
 
 ### MONGO DB
 
@@ -118,6 +123,7 @@ const userSchema = new mongoose.Schema(
     }
 )
 ```
+
 ```
 const todoSchema = new mongoose.Schema(
     {
@@ -146,6 +152,7 @@ const todoSchema = new mongoose.Schema(
     }
 )
 ```
+
 ```
 const statusRouter = new mongoose.Schema(
     {
@@ -183,7 +190,9 @@ const categorySchema = new mongoose.Schema(
     }
 )
 ```
+
 #### ENVIROMENT
+
 ```
 PORT = 3400
 
