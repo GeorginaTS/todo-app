@@ -6,6 +6,8 @@
 
 #### Kan-ban desk with Drag and Drop
 
+### Thanks to my teacher [Irene Valle](https://github.com/irenevg18) ###
+
 
 ## Visit it. ##
 [https://georgina-todoapp.netlify.app](https://georgina-todoapp.netlify.app) 
