@@ -5,7 +5,6 @@
             <CategoryTag :id="todo.category_id" />
         </div>
         <p>{{ todo.content }}</p>
-        <p class="text-xs">User: {{ todo.user_id }}</p>
     </div>
 </template>
 <script>

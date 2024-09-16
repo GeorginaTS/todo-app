@@ -1,6 +1,6 @@
 <template>
     <div class="bg-stone-200 w-[90%] flex flex-col gap-2 p-4 rounded-b-lg">
-        <h2 class="text-xl font-bold">Update ToDo with id: {{ todoId }}</h2>
+        <h2 class="text-xl font-bold">Update ToDo</h2>
         <form class="flex flex-col gap-2" @submit="addTodo" v-if="todo">
             Title: <input type="text" v-model="title">
             Content: <textarea v-model="content"></textarea>
