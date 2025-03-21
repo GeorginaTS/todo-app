@@ -34,7 +34,6 @@
       </ul>
     </div>
   </div>
-  <div> token: {{userStore.token}} <br> todos {{ todos }}</div>
 </template>
 <script>
 
