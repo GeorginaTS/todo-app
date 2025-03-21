@@ -70,5 +70,5 @@ jobs:
         with:
           app-name: 'todo-app-back'
           slot-name: 'Production'
-          package: ./back
+          package: .
           
