@@ -27,7 +27,7 @@ jobs:
         run: |
           cd back
           npm install
-          npm run build --if-present
+          npm start
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
