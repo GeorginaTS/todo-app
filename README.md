@@ -2,6 +2,11 @@
 
 ## Full stack application
 
+<img src="./assets/img/vuedotjs-color.svg" alt="Vue" width="10%"> 
+<img src="./assets/img/vite-color.svg" alt="Express" width="10%"> 
+<img src="./assets/img/express.svg" alt="Express" width="10%"> 
+<img src="./assets/img/javascript-color.svg" alt="Javascript" width="10%">
+
 #### Small app to keep tasks organized. Keep it simple 😊
 
 #### Kan-ban desk with Drag and Drop
@@ -14,6 +19,11 @@
 
 ## FRONTEND
 
+<img src="./assets/img/captura-login.png" alt="Login view" width="30%">
+<img src="./assets/img/captura-home.png" alt="Home view" width="30%">
+<img src="./assets/img/captura-register.png" alt="Register view" width="30%">
+
+
 ```
 cd front
 npm run dev
@@ -21,7 +31,7 @@ npm run dev
 
 Made with Vue 3 with Vite.
 
-I've'used:
+I've used:
 
 - Tailwind to styling
 - Vue router for routing
@@ -33,15 +43,12 @@ I've'used:
 
 "/register" - Register user view
 
-"/auth" - Logged zone, verified user with token.Fetch with Authoritation Token
+"/auth" - Logged zone, verified user with token. Fetch with Authoritation Token
 
 "/auth/:id" - Detail Task View
 
 "/auth/profile" - User View with option to change password
 
-<img src="./assets/img/captura-login.png" alt="Login view" width="30%">
-<img src="./assets/img/captura-register.png" alt="Register view" width="30%">
-<img src="./assets/img/captura-home.png" alt="Home view" width="30%">
 
 #### ENVIROMENT
 
