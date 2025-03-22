@@ -15,7 +15,7 @@
 
 ## Visit it ##
 
-[https://georgina-todoapp.netlify.app](https://georgina-todoapp.netlify.app)
+[https://georgina-todoapp.netlify.app](https://georgina-todoapp.netlify.app){:target="_blank"} 
 
 ## FRONTEND
 
