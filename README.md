@@ -15,7 +15,7 @@
 
 ## Visit it ##
 
-[https://georgina-todoapp.netlify.app](https://georgina-todoapp.netlify.app) 
+[https://proud-bush-0a486df0f.6.azurestaticapps.net](https://proud-bush-0a486df0f.6.azurestaticapps.net) 
 
 
 ## FRONTEND
