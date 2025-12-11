@@ -61,7 +61,7 @@ export default {
                     content: this.content,
                     category_id: this.category,
                     user_id: this.userStore.user._id,
-                    status_id: "6697b6a989b66f6dd49da2f5"
+                    status_id: "67dd83badd8452a4cfb9014e"
                 }
                 console.log(newTodo)
                 try {

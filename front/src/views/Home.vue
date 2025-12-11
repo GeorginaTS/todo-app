@@ -6,7 +6,6 @@
       <AddTodoForm v-if="addForm" @todosUpdated="todosListUpdate" />
       <UpdateTodoForm v-if="updateForm" :todoId="updateForm" @todosUpdated="todosListUpdate" />
     </div>
-
     <div>
       <ul v-if="statusStore" class="flex justify-between gap-4 m-2">
         <li v-for="status in statusStore.status" :key="status._id" :id="status._id" :value="status._id"

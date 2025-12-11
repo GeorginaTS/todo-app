@@ -12,8 +12,7 @@ export const useUserStore = defineStore("user", {
   //methods
   actions: {
     async validToken(token) {
-        try {
-          
+        try {      
             this.token = token 
             const response = await fetch(`${this.serverUrl}/users/auth`, 
               {
